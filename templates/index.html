@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/add/" method="post">
+  <input type="text" id="ingredient" name="ingredient"><br>
+  <input type="submit" value="Add Ingredient">
+</form>
+
+{% if ingredients %}
+  <div class="ingredients">
+    <p>Selected ingredients:</p>
+    <ul>
+      {% for ingredient in ingredients %}
+      <li>{{ ingredient }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <form action="/clear/" method="post">
+    <input type="submit" value="Clear">
+  </form>
+  
+  <form action="/results" method="get">
+    <input type="submit" value="Search">
+  </form>
+
+{% else %}
+<br>
+<br>
+<p>Add some ingredients to find some recipes you can make with them!</p>
+{% endif %}
+
+{% endblock %}

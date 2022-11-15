@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="recipe">
+  <h1>{{ recipe.name }}</h1>
+  <p>Rating: {{ recipe.rating }}/10, Cooking Time: {{ recipe.time }} minutes</p>
+  <img src="{{ url_for('static', filename=recipe.image) }}" alt="recipe_image">
+  <h3>Instructions:</h3>
+  <p>{{ recipe.text }}</p>
+</div>
+</a>
+{% endblock %}

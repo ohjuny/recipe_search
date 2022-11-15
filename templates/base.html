@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Recipe Search</title>
+  </head>
+  <body>
+    <h1><a href="{{ url_for('home_clear') }}">Recipe Search</a></h1>
+    
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
