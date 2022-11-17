@@ -4,10 +4,13 @@
 
 <div class="recipe">
   <h1>{{ recipe.name }}</h1>
-  <p>Rating: {{ recipe.rating }}/10, Cooking Time: {{ recipe.time }} minutes</p>
-  <img src="{{ url_for('static', filename=recipe.image) }}" alt="recipe_image">
+  <p>Rating: {{ recipe.rating }}/10, Cooking Time: {{ recipe.time }}</p>
+  <img src="{{ recipe.image }}" alt="recipe_image">
   <h3>Instructions:</h3>
-  <p>{{ recipe.text }}</p>
+  {% for line in recipe.instructions %}
+  <p>{{ line }}</p>
+  {% endfor %}
+
 </div>
 </a>
 {% endblock %}

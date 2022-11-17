@@ -12,15 +12,19 @@
 </div>
 
 <div class="result_recipes">
-{% for recipe in recipes %}
-<a href="/recipe/{{ recipe.id }}">
-  <div class="result_recipe">
-    <h1>{{ recipe.name }}</h1>
-    <p>Rating: {{ recipe.rating }}/10</p>
-    <p>Cooking time: {{ recipe.time }} minutes</p>
-    <img src="{{ url_for('static', filename=recipe.image) }}" alt="recipe_image">
-  </div>
-{% endfor %}
+{% if recipes|length == 0 %}
+  <p style="text-align: center;">No recipes found. Please try some other ingredients.</p>
+{% else %}
+  {% for recipe in recipes %}
+  <a href="/recipe/{{ recipe.id }}">
+    <div class="result_recipe">
+      <h1>{{ recipe.name }}</h1>
+      <p>Rating: {{ recipe.rating }}/10</p>
+      <p>Cooking time: {{ recipe.time }}</p>
+      <img src="{{ recipe.image }}" alt="recipe_image">
+    </div>
+  {% endfor %}
+{% endif %}
 </div>
 </a>
 {% endblock %}
