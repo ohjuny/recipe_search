@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="center">
+
+<a href="{{ url_for('home_clear') }}">
+  <img src="{{ url_for('static', filename='internal/logo.png') }}" height="200px" alt="logo">
+</a>
 
 <form action="/add/" method="post">
   <input type="text" id="ingredient" name="ingredient"><br>
@@ -36,4 +41,5 @@
 <p>Add some ingredients to find some recipes you can make with them!</p>
 {% endif %}
 
+</div>
 {% endblock %}

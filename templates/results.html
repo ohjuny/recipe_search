@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<a href="{{ url_for('home_clear') }}">
+  <img src="{{ url_for('static', filename='internal/logo.png') }}" height="200px" alt="logo">
+</a>
 
 <div class="ingredients">
   <p>Showing recipes for:</p>
@@ -19,8 +22,13 @@
   <a href="/recipe/{{ recipe.id }}">
     <div class="result_recipe">
       <h1>{{ recipe.name }}</h1>
-      <p>Rating: {{ recipe.rating }}/10</p>
-      <p>Cooking time: {{ recipe.time }}</p>
+      <!-- <p>Rating: {{ recipe.rating }}/10</p> -->
+      Cooking Time: 
+      {% if recipe.time == '' %}
+      15 minutes
+      {% else %}
+      {{ recipe.time }}
+      {% endif %}
       <img src="{{ recipe.image }}" alt="recipe_image">
     </div>
   {% endfor %}

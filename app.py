@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 # from test_recipes import recipes, getRecipe
-from API import getMatchingRecipes, getRecipe
+from API import getRecipes, getRecipe
 
 app = Flask(__name__)
 
@@ -26,14 +26,12 @@ def home_clear():
 def results():
     if not ingredients:
         return redirect(url_for('home'))
-    recipes = getMatchingRecipes(ingredients)
-    print('-------before--------')
-    print(recipes)
+    recipes = getRecipes(ingredients)
     return render_template('results.html', ingredients=ingredients, recipes=recipes)
 
 @app.route('/recipe/<id>')
 def recipe(id):
-    recipe = getRecipe(id)
+    recipe = getRecipe(id, ingredients)
     if not recipe:
         print('Error: no recipe found with id {}'.format(id))
         exit(1)

@@ -1,15 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
+<a href="{{ url_for('home_clear') }}">
+  <img src="{{ url_for('static', filename='internal/logo.png') }}" height="200px" alt="logo">
+</a>
 
 <div class="recipe">
   <h1>{{ recipe.name }}</h1>
-  <p>Rating: {{ recipe.rating }}/10, Cooking Time: {{ recipe.time }}</p>
-  <img src="{{ recipe.image }}" alt="recipe_image">
-  <h3>Instructions:</h3>
-  {% for line in recipe.instructions %}
-  <p>{{ line }}</p>
+  <p>Cooking Time: 
+    {% if recipe.time == '' %}
+    <b>15 minutes</b>
+    {% else %}
+    <b>{{ recipe.time }}</b>
+    {% endif %}
+  </p>
+  Ingredients:
+  <ul>
+  {% for ingredient in recipe.ingredients %}
+  <li>{{ ingredient }}</li>
   {% endfor %}
+  </ul>
+
+
+  <hr>
+
+  <table>
+    <tr>
+      <td>
+        <h3>Instructions:</h3>
+        <ol>
+        {% for line in recipe.instructions %}
+        {% if line != '' %}
+          <li>{{ line }}</li>
+          <br>
+        {% endif %}
+        {% endfor %}
+        </ol>
+      </td>
+      <td width="400px">
+        <img src="{{ recipe.image }}" width="400px" height="auto" alt="recipe_image">
+      </td>
+    </tr>
+  </table>
+
 
 </div>
 </a>

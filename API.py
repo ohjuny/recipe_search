@@ -12,28 +12,27 @@
 
 import requests
 
-def getRecipe(id):
-    recipes = getRecipes()
+def getRecipe(id, ingredients):
+    recipes = getRecipes(ingredients)
     for recipe in recipes:
         if recipe['id'] == id:
             return recipe
     return None
 
-def getRecipes():
+def getRecipes(ingredients):
     # HTTP Headers including sg-user for especific user context
     headers = {
         "Authorization": "Token 7b9f6fd852faba099be1984c97124b7f8d776f26",
         "sg-user": "e084268c-5487-4f35-9d74-9ce41de3992b"
     }
-    # GraphQL query
+
     query = """{
-    popularRecipes {
+    recipeSearch(first:100, ingredients: """ + str(ingredients) + """) {
         edges {
         node {
             id
             name
             totalTime
-            rating
             ingredients {
                 name
             }
@@ -42,7 +41,13 @@ def getRecipes():
         }
         }
     }
-    }"""
+    }
+    """
+
+    query = query.replace("'", '"')
+
+    print("\nQUERY WAS:")
+    print(query)
 
     # Make request
     r = requests.post(
@@ -52,27 +57,30 @@ def getRecipes():
     )
 
     recipes = []
-    for node in r.json()['data']['popularRecipes']['edges']:
+    print(r.json())
+    print(len(r.json()['data']['recipeSearch']['edges']))
+
+    for node in r.json()['data']['recipeSearch']['edges']:
         recipe = {
             'id': node['node']['id'],
             'name': node['node']['name'],
             'ingredients': set([obj['name'].lower() for obj in node['node']['ingredients']]),
             'time': node['node']['totalTime'],
-            'rating': node['node']['rating'],
+            # 'rating': 11 - node['node']['rating'],
             'image': node['node']['mainImage'],
             'instructions' : node['node']['instructions']
         }
         recipes.append(recipe)
 
-    # print(recipes)
+    print(recipes)
     return recipes
 
-def getMatchingRecipes(ingredients):
-    recipes = getRecipes()
-    results = []
-    for ing in ingredients:
-        for recipe in recipes:
-            if ing in recipe['ingredients']:
-                results.append(recipe)
-                break
-    return results
+# def getMatchingRecipes(ingredients):
+#     recipes = getRecipes()
+#     results = []
+#     for ing in ingredients:
+#         for recipe in recipes:
+#             if ing in recipe['ingredients']:
+#                 results.append(recipe)
+#                 break
+#     return results
